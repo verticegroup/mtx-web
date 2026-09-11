@@ -70,7 +70,7 @@
   .s-products .pattern,.s-map .pattern{position:absolute!important;left:0;top:0;width:100%;height:auto}
   .s-products .lines{position:absolute!important;left:0;top:0;width:100%;height:100%;object-fit:cover}
   #h-prod{margin-left:var(--gut);font-size:14px}
-  .slides{position:relative;height:calc(78cqw + 270px)}
+  .slides{position:relative;height:calc(78cqw + 202px + 2 * min(8.4cqw, 56px))}
   .slide{position:absolute;inset:0}
   .home .bike-sm{position:absolute!important;left:6%;top:calc(21.7cqw + 22px);height:auto!important;width:88%}
   .bike-lg{display:none}
@@ -80,7 +80,7 @@
   .cta{position:absolute!important;left:var(--gut);top:calc(78cqw + 44px);width:170px;height:44px;font-size:17px;padding-top:3px}
   .stats{position:absolute;left:0;right:0;top:calc(78cqw + 116px);display:grid;grid-template-columns:1fr 1fr;row-gap:22px}
   .stats > div{position:relative;left:auto!important;top:auto!important;width:auto}
-  .stats dd{position:static;font-size:8.4cqw;line-height:1}
+  .stats dd{position:static;font-size:min(8.4cqw,56px);line-height:1}
   .stats dt{position:static;margin-top:6px;font-size:12px;line-height:1}
   .stats > div{display:flex;flex-direction:column-reverse;align-items:center}
   .arrows{position:absolute!important;left:auto!important;right:var(--gut);top:calc(78cqw + 98px);width:110px;height:44px;z-index:2}
@@ -101,7 +101,7 @@
   .panel .country-k i{left:0;top:3px;width:10px;height:10px}
   .panel .country{margin-top:6px;font-size:34px;line-height:1.1}
   .panel hr{width:auto;margin:16px 0 20px}
-  .dealers{width:auto;height:auto;max-height:520px;gap:14px;padding-right:0}
+  .dealers{width:auto;height:auto;max-height:none;overflow:visible;gap:14px;padding-right:0}
   .dealers li{min-height:0;border-radius:14px;padding:14px}
   .dealers h3{font-size:14px}
   .dealers dl{position:static;margin-top:12px}
@@ -121,7 +121,7 @@
   .fuerza .t{display:block;font-size:5.6cqw;line-height:1.1;white-space:nowrap}
   .fuerza .t:first-child{text-align:right}
   .fuerza .t:last-child{padding-left:12%}
-  .partner-title{display:block;margin:64px var(--gut) 0;font-size:10cqw!important;line-height:1.12!important;text-align:center}
+  .partner-title{display:block;margin:64px var(--gut) 0;font-size:min(10cqw,64px)!important;line-height:1.12!important;text-align:center}
   .partner-title span{padding-left:0!important}
   .tabs{display:flex;justify-content:center;gap:34px;margin-top:30px;position:relative}
   .tabs button{position:static;font-size:19px}
@@ -153,7 +153,8 @@
   .price .t:nth-child(3){font-size:11px;margin-top:6px}
 
   .p-main{padding:40px 0 64px}
-  .p-main .pattern,.p-esp .pattern{position:absolute!important;left:0;top:0;width:100%;height:auto}
+  /* el patrón de triángulos del producto está hecho para el artboard completo: en móvil sale en franjas sueltas */
+  .p-main .pattern,.p-esp .pattern{display:none}
   .p-main .lines{position:absolute!important;left:0;top:0;width:100%;height:auto}
   .p-main > p.t:first-of-type{margin-left:var(--gut);font-size:14px}
   .p-main .bike-sm{position:relative!important;display:block;left:auto;top:auto;width:92%;margin:16px auto 0;height:auto!important}
@@ -177,7 +178,7 @@
   .acc + .acc,.acc-row{margin-top:22px}
   .acc-row{display:block}
   .acc-row .acc + .acc{margin-top:22px}
-  .acc .pill{height:48px;width:auto;border-radius:24px;font-size:20px;line-height:1;padding:0 22px;display:inline-flex;align-items:center}
+  .acc .pill,.acc .pill[style*="--pw"]{height:48px;width:auto;border-radius:24px;font-size:20px;line-height:1;padding:0 22px;display:inline-flex;align-items:center}
   .specs,.half .specs{width:auto;margin:8px 0 0}
   .half.r .specs{margin-left:0;padding-top:0}
   .specs li{grid-template-columns:48% 1fr!important;height:auto;min-height:44px;padding:13px 0 10px;font-size:14px;line-height:1.3;white-space:normal;column-gap:10px}
@@ -190,6 +191,7 @@
   .hotimg{position:relative;width:auto;height:auto;margin:26px 8px 0}
   .hot-inner{height:auto;width:100%}
   .spot{width:30px;height:30px;margin:-15px 0 0 -15px;font-size:13px}
+  @media (max-width: 480px){ .spot{width:24px;height:24px;margin:-12px 0 0 -12px;font-size:10px} }
   .esp-list{margin:22px var(--gut) 0;font-size:14px!important;line-height:2.2!important;columns:1}
   .spot-pop{position:fixed;left:16px!important;right:16px;top:auto!important;bottom:16px;width:auto;border-radius:16px;z-index:70}
   .spot-pop img{aspect-ratio:4/3}
@@ -197,7 +199,7 @@
   .pop-x{width:36px;height:36px;font-size:24px}
 
   .p-gal{padding:56px 0 56px}
-  .p-gal > h2.t{margin:0 var(--gut);font-size:min(6.2cqw,56px);line-height:1.2}
+  .p-gal > h2.t{margin:0 var(--gut);font-size:min(56px, calc((100cqw - 2 * var(--gut)) / (var(--cl, 19) * .82)));line-height:1.2;white-space:nowrap}
   .p-gal > p.t{margin:14px var(--gut) 0;font-size:15px}
   .gal{position:relative;width:100%;margin-top:26px}
   .gal-track{padding:0 var(--gut);gap:12px;scroll-padding-left:var(--gut)}

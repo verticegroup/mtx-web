@@ -1,0 +1,6 @@
+/* Una sola hoja por página, en este orden, para que mobile.css siempre gane al final
+   (si se importan por separado, el build de producción puede reordenarlas). */
+@import './base.css';
+@import './home.css';
+@import './product.css';
+@import './mobile.css';

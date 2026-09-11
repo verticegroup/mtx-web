@@ -3,9 +3,7 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { models, type Model, type SpecGroup } from '../../data/models';
 import { asset, assetsIn } from '../../lib/images';
-import '../../styles/home.css';
-import '../../styles/product.css';
-import '../../styles/mobile.css';
+import '../../styles/page-product.css';
 
 export function getStaticPaths() {
   return models.map((m) => ({ params: { slug: m.slug }, props: { model: m } }));
@@ -196,7 +194,7 @@ let uid = 0;
 
   <!-- ============ CLAIM / GALERÍA ============ -->
   <section class="sec p-gal" style="--sy:9087;--sh:1547" aria-labelledby="h-gal">
-    <h2 class="t ff-h c-ink2" id="h-gal" style="--x:121.78;--b:9271.63;--fs:76.55;--lh:91.85">{m.claim[0]}<br>{m.claim[1]}<br>{m.claim[2]}</h2>
+    <h2 class="t ff-h c-ink2" id="h-gal" style={`--x:121.78;--b:9271.63;--fs:76.55;--lh:91.85;--cl:${Math.max(...m.claim.map((l) => l.length))}`}>{m.claim[0]}<br>{m.claim[1]}<br>{m.claim[2]}</h2>
     <p class="t ff-s c-ink" style="--x:121.78;--b:9544.06;--fs:25">{m.subtitle}</p>
     <div class="gal a" style="--x:0;--y:9647.96;--w:1920;--h:900">
       <ul class="gal-track" tabindex="0" aria-label="Galería de detalles">
