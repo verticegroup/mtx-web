@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { asset } from '../lib/images';
+import '../styles/home.css';
+import '../styles/garantia.css';
+import '../styles/mobile.css';
+---
+<Base
+  title="Garantía MTX — MTX Protection Program"
+  description="MTX Protection Program: 3 niveles de protección hasta los 50.000 km y el procedimiento de reclamo en la red de talleres autorizados MTX."
+  current="garantia"
+  pageClass="garantia"
+  contact="black"
+>
+  <section class="sec g-hero" style="--sy:0;--sh:2082" aria-labelledby="h-g">
+    <div class="a g-bg" style="--x:0;--y:0;--w:1920;--h:2265.6"><Image src={asset('img/dark-bikes-bg.webp')} widths={[960, 1920, 2880]} sizes="100vw" alt="" loading="eager" /></div>
+    <h1 id="h-g">
+      <span class="t ff-d c-bronze" style="--x:33.54;--b:720.15;--fs:272.25">GARANTÍA</span>
+      <span class="t ff-d ol-b" style="--x:33.54;--b:945.7;--fs:272.25" aria-hidden="true">GARANTÍA</span>
+    </h1>
+    <div class="vline-b a" style="--x:648.74;--y:990;--h:1270"></div>
+    <h2 class="t ff-t c-w" style="--x:698.53;--b:1105.02;--fs:54.85">MTX PROTECTION PROGRAM</h2>
+    <p class="t wrap ff-s c-w g-intro" style="--x:698.54;--b:1233.06;--fs:20;--lh:26.66">Cada motocicleta ha sido diseñada para afrontar los desafíos del trabajo diario. El programa MTX Protection lo acompaña desde el primer kilómetro hasta los 50.000 km, con cobertura escalonada sobre los principales sistemas. Nuestro compromiso: mantener su motocicleta trabajando y generando resultados para usted.</p>
+  </section>
+
+  <section class="sec g-levels" style="--sy:2082;--sh:3508" aria-labelledby="h-lv">
+    <h2 class="t ff-d c-w" id="h-lv" style="--x:147.7;--b:2465.04;--fs:115.91;--lh:139.09">3 NIVELES<br>DE PROTECCIÓN MTX</h2>
+    <ol class="lv">
+      <li style="--bx:673;--by:2925;--tx:691.34;--nx:924.7;--nb:3024.67;--dx:691.34;--db:3202.2">
+        <span class="lv-k">NIVEL 01</span><h3 class="lv-n">FULL</h3>
+        <p class="lv-d">0-12 meses · 10.000 km<br>Cobertura amplia</p>
+        <ul class="lv-l"><li>· Motor</li><li>· Transmisión</li><li>· Sistema eléctrico</li><li>· Componentes generales</li></ul>
+      </li>
+      <li style="--bx:691.56;--by:3722.37;--tx:709.9;--nx:938.99;--nb:3822.04;--dx:709.9;--db:3999.57">
+        <span class="lv-k">NIVEL 02</span><h3 class="lv-n">EXTENDED</h3>
+        <p class="lv-d">13-24 meses · 25.000 km<br>Cobertura del vehículo</p>
+        <ul class="lv-l"><li>· Motor</li><li>· Transmisión</li><li>· Componentes generales</li></ul>
+      </li>
+      <li style="--bx:691.56;--by:4488.03;--tx:709.9;--nx:940.75;--nb:4587.7;--dx:709.9;--db:4765.23">
+        <span class="lv-k">NIVEL 03</span><h3 class="lv-n">POWERTRAIN</h3>
+        <p class="lv-d">25-60 meses · 50.000 km<br>Protección extendida</p>
+        <ul class="lv-l"><li>· Motor</li><li>· Transmisión</li></ul>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec g-cards" style="--sy:5590;--sh:4148" aria-label="Detalle de los niveles">
+    <article class="gc" style="--c:var(--bronze)">
+      <div class="gc-ph a" style="--x:145.59;--y:5483;--w:1020.96;--h:669.75"><Image src={asset('img/garantia-n1.webp')} widths={[720, 1100, 2040]} sizes="(max-width: 1023px) 92vw, 60vw" alt="Piloto en una MTX Rush 150 por carretera de montaña" style="left:calc(-23.69 * var(--u));top:calc(-408 * var(--u));width:calc(1131.2 * var(--u));height:calc(1413.5 * var(--u))" /></div>
+      <span class="gc-pill a" style="--x:363;--y:5768;--w:601">NIVEL 01</span>
+      <h3 class="t ff-w" style="--x:352.37;--b:6304.65;--fs:80">FULL</h3>
+      <p class="t wrap ff-t gc-t" style="--x:350.85;--b:6389.44;--fs:25;--lh:30">Tranquilidad desde el primer kilómetro. Disfruta tu motocicleta con la máxima confianza desde el inicio de tu recorrido.</p>
+      <p class="t ff-s gc-d" style="--x:350.85;--b:6549.46;--fs:32.85;--lh:39.42">0-12 meses · 10.000 km<br>Cobertura amplia</p>
+      <ul class="t ff-s gc-l" style="--x:350.85;--b:6662.79;--fs:28.74;--lh:34.49"><li>· Motor</li><li>· Transmisión</li><li>· Sistema eléctrico</li><li>· Componentes generales</li></ul>
+    </article>
+    <article class="gc" style="--c:#34348F">
+      <div class="gc-ph a" style="--x:763.12;--y:6936.46;--w:1007.02;--h:660.61"><Image src={asset('img/garantia-n2.webp')} widths={[720, 1100, 2040]} sizes="(max-width: 1023px) 92vw, 60vw" alt="Piloto en una MTX Aspen 150 junto al mar" style="left:calc(-43.02 * var(--u));top:calc(-363.86 * var(--u));width:calc(1094.2 * var(--u));height:calc(1367.2 * var(--u))" /></div>
+      <span class="gc-pill a" style="--x:981;--y:7221;--w:601">NIVEL 02</span>
+      <h3 class="t ff-w" style="--x:965.4;--b:7781.32;--fs:80">EXTENDED</h3>
+      <p class="t wrap ff-t gc-t" style="--x:968.4;--b:7872.94;--fs:25;--lh:30">Sigue disfrutando de tu motocicleta con la tranquilidad de una garantía que te acompaña durante el recorrido.</p>
+      <p class="t ff-s gc-d" style="--x:968.4;--b:8029.96;--fs:32.85;--lh:39.42">13-24 meses · 25.000 km<br>Cobertura del vehículo</p>
+      <ul class="t ff-s gc-l" style="--x:968.4;--b:8143.28;--fs:28.74;--lh:34.49"><li>· Motor</li><li>· Transmisión</li><li>· Componentes generales</li></ul>
+    </article>
+    <article class="gc" style="--c:var(--red)">
+      <div class="gc-ph a" style="--x:145.59;--y:8376.17;--w:1020.95;--h:669.76"><Image src={asset('img/garantia-n3.webp')} widths={[720, 1100, 2040]} sizes="(max-width: 1023px) 92vw, 60vw" alt="Piloto en un scooter MTX Metro 150 por la ciudad" style="left:calc(-15.09 * var(--u));top:calc(-379.17 * var(--u));width:calc(1036 * var(--u));height:calc(1294.6 * var(--u))" /></div>
+      <span class="gc-pill a" style="--x:370;--y:8672;--w:601">NIVEL 03</span>
+      <h3 class="t ff-w" style="--x:357.54;--b:9232.02;--fs:80">POWERTRAIN</h3>
+      <p class="t wrap ff-t gc-t" style="--x:357.82;--b:9323.64;--fs:25;--lh:30">Protección esencial para que sigas disfrutando tu motocicleta con confianza durante el recorrido.</p>
+      <p class="t ff-s gc-d" style="--x:357.82;--b:9480.66;--fs:32.85;--lh:39.42">25-60 meses · 50.000 km<br>Protección extendida</p>
+      <ul class="t ff-s gc-l" style="--x:357.82;--b:9593.98;--fs:28.74;--lh:34.49"><li>· Motor</li><li>· Transmisión</li></ul>
+    </article>
+  </section>
+
+  <section class="sec g-steps" style="--sy:9738;--sh:1919" aria-labelledby="h-steps">
+    <h2 class="t ff-d c-k" id="h-steps" style="--x:147.75;--b:9965.36;--fs:115.91;--lh:139.09">PROCEDIMIENTO<br>DE RECLAMO</h2>
+    <p class="t ff-t steps-k" style="--x:147.8;--b:10218.61;--fs:45">SIGUE ESTOS PASOS EN LA RED DE TALLERES AUTORIZADOS MTX</p>
+    <ol class="steps">
+      <li style="--pb:10476.37"><span class="st-pill">PASO 1</span><h3>PRESENTACIÓN</h3><p>Presentar la moto en taller autorizado MTX</p></li>
+      <li style="--pb:10693.23"><span class="st-pill">PASO 2</span><h3>DIAGNÓSTICO</h3><p>Diagnóstico técnico por personal calificado</p></li>
+      <li style="--pb:10917.78"><span class="st-pill">PASO 3</span><h3>SOLICITUD</h3><p>Solicitud formal. Generación del reporte de garantía</p></li>
+      <li style="--pb:11149.98"><span class="st-pill">PASO 4</span><h3>EVALUACIÓN</h3><p>Evaluación MTX. Aprobación técnica oficial</p></li>
+      <li style="--pb:11382.18"><span class="st-pill">PASO 5</span><h3>RESOLUCIÓN</h3><p>Reparación o sustitución del componente aprobado</p></li>
+    </ol>
+  </section>
+</Base>

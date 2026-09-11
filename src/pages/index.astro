@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { models, carouselBar, featuredSlug } from '../data/models';
+import { countries } from '../data/dealers';
+import { site } from '../data/site';
+import { asset } from '../lib/images';
+import '../styles/home.css';
+import '../styles/mobile.css';
+
+const featured = models.findIndex((m) => m.slug === featuredSlug);
+const country = countries[0];
+const statKeys = [
+  ['cc', 'CILINDRADA', 306.5],
+  ['kw', 'POTENCIA MÁX.', 722.3],
+  ['vel', 'VEL. MÁXIMA', 1167.9],
+  ['peso', 'PESO HÚMEDO', 1597.8],
+] as const;
+const fields: [string, string, string, string, boolean][] = [
+  // [label, name, type, autocomplete, required]
+  ['PAIS', 'pais', 'text', 'country-name', true],
+  ['CIUDAD', 'ciudad', 'text', 'address-level2', true],
+  ['ESTADO', 'estado', 'text', 'address-level1', false],
+  ['EMPRESA', 'empresa', 'text', 'organization', true],
+  ['NOMBRE', 'nombre', 'text', 'given-name', true],
+  ['APELLIDO', 'apellido', 'text', 'family-name', true],
+  ['NUMERO DE CONTACTO', 'telefono', 'tel', 'tel', true],
+  ['CORREO EMPRESA', 'correo', 'email', 'email', true],
+  ['SITIO WEB', 'web', 'url', 'url', false],
+  ['EXPERIENCIA EN MOTOCICLETAS', 'experiencia', 'text', 'off', false],
+];
+const rowsY = [8773, 8857, 8941, 9025, 9111];
+const heroSizes = '(max-width: 1023px) 220vw, 113vw';
+---
+<Base
+  title="MTX Bikes — Motocicletas para moverse con propósito"
+  description="MTX es una marca de motocicletas creada para responder a las necesidades reales de movilidad, trabajo y uso cotidiano. Conoce la gama Aspen, Metro, Rush y Way."
+  current="home"
+  pageClass="home"
+  contact="blue"
+>
+  <!-- ================= INTRO: hero + conoce ================= -->
+  <section class="sec s-intro" style="--sy:0;--sh:3710" aria-labelledby="h-hero">
+    <Image class="a intro-bg" style="--x:0;--y:1106.4;--w:1920;--h:2640" src={asset('img/dark-bikes-bg.webp')} widths={[960, 1920, 2880]} sizes="100vw" alt="" />
+    <div class="hero a" style="--x:0;--y:0">
+      <div class="hero-photo"><Image src={asset('models/aspen-200/hero.webp')} widths={[1280, 1920, 2560, 3840]} sizes={heroSizes} alt="Piloto MTX en una Aspen 200 por un camino de montaña" loading="eager" fetchpriority="high" /></div>
+      <div class="hero-shade g1"></div>
+      <div class="tri" style="clip-path:polygon(20.775% 32.445%,46.338% 46.634%,41.252% 4.099%)"><Image src={asset('img/home-hero-tri-a.webp')} widths={[1200, 2237]} sizes="117vw" alt="" loading="eager" /></div>
+      <div class="tri" style="clip-path:polygon(10.032% 93.309%,26.162% 80.065%,10.930% 64.316%)"><Image src={asset('img/home-hero-tri-b.webp')} widths={[1200, 2237]} sizes="117vw" alt="" loading="eager" /></div>
+      <div class="tri" style="clip-path:polygon(52.348% 99.255%,98.677% 70.800%,60.119% 20.778%)"><Image src={asset('img/home-hero-tri-a.webp')} widths={[1200, 2237]} sizes="117vw" alt="" loading="eager" /></div>
+      <img class="hero-lines" src="/svg/lines-home-hero.svg" alt="" width="1920" height="1400">
+      <div class="hero-shade g2"></div>
+    </div>
+    <h1 id="h-hero" class="hero-title">
+      <span class="t ff-d c-red" style="--x:33.55;--b:720.23;--fs:272.25">MTX BIKES</span>
+      <span class="t ff-d ol" style="--x:33.55;--b:945.78;--fs:272.25" aria-hidden="true">MTX BIKES</span>
+    </h1>
+
+    <div class="vline a" style="--x:648.74;--y:1818.67;--h:1513.68"></div>
+    <p class="t ff-t w4 kicker" style="--x:728.99;--b:1851.16;--fs:25;color:#E4E4E4">CONOCE MÁS DE MTX</p>
+    <h2 class="t ff-d c-red" style="--x:728.99;--b:1994.06;--fs:75;--lh:90">MOTOCICLETAS<br>PARA MOVERSE<br>CON PROPÓSITO</h2>
+    <span class="t ff-d ol thin" style="--x:952.76;--b:2241.99;--fs:75" aria-hidden="true">PROPÓSITO</span>
+    <div class="t wrap ff-s about" style="--x:728.99;--b:2375.09;--fs:20;--lh:26.66">
+      <p>MTX es una marca de motocicletas creada para responder a las necesidades reales de movilidad, trabajo y uso cotidiano. Cada modelo combina diseño funcional, carácter visual y una propuesta accesible pensada para distintos estilos de conducción y diferentes entornos.</p>
+      <p>Nuestra gama de motocicletas abarca soluciones para movilidad urbana, recorridos diarios y experiencias sobre terrenos más exigentes, manteniendo siempre un enfoque práctico y coherente. MTX desarrolla productos que buscan ofrecer una relación clara entre diseño, funcionalidad y uso real.</p>
+      <p>Más que seguir una única forma de moverse, MTX construye una gama capaz de acompañar diferentes necesidades y perfiles de usuario. Una marca contemporánea, directa y preparada para crecer en nuevos mercados con motocicletas concebidas para formar parte de la vida diaria.</p>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTOS (carrusel) ================= -->
+  <section class="sec s-products on-light" id="productos" style="--sy:3710;--sh:1731.4" aria-labelledby="h-prod" data-carousel>
+    <img class="a pattern" style="--x:0;--y:3710;--w:1920;--h:3236" src="/svg/pattern-home.svg" alt="" loading="lazy">
+    <img class="a lines" style="--x:0;--y:3710;--w:1920;--h:1732" src="/svg/lines-home-products.svg" alt="" loading="lazy">
+    <p class="t ff-t w4 c-red" id="h-prod" style="--x:123.31;--b:3854.17;--fs:25">NUESTROS PRODUCTOS</p>
+
+    <div class="slides" aria-live="polite">
+      {models.map((m, i) => {
+        const c = m.colors[0].id;
+        return (
+          <article class={`slide${i === featured ? ' is-active' : ''}`} data-slug={m.slug} aria-hidden={i === featured ? undefined : 'true'} aria-roledescription="modelo" aria-label={`${i + 1} de ${models.length}: ${m.name}`}>
+            <Image class="a bike-sm" style="--x:96.6;--y:3965.1;--h:595" src={asset(`models/${m.slug}/side-right-${c}.webp`)} widths={[600, 1000, 1725]} sizes="(max-width: 1023px) 90vw, 50vw" alt={`MTX ${m.name}, vista lateral`} />
+            <Image class="a bike-lg" style="--x:970.7;--y:3830.3;--h:1303.4" src={asset(`models/${m.slug}/side-left-${c}.webp`)} widths={[1100, 1600, 2400]} sizes="110vw" alt="" aria-hidden="true" />
+            <h3 class="names">
+              <span class="t ff-d c-red" style="--x:123.31;--b:4686.5;--fs:115.91">{m.name}</span>
+              <span class="t ff-d c-red" style="--x:123.31;--b:4786.64;--fs:115.91" aria-hidden="true">{m.name}</span>
+              <span class="t ff-d ol" style="--x:123.31;--b:4886.67;--fs:115.91" aria-hidden="true">{m.name}</span>
+            </h3>
+            <a class="a btn-pill cta" style="--x:116;--y:4963;--w:257;--h:54" href={`/productos/${m.slug}/`} tabindex={i === featured ? undefined : -1}>DESCUBRE MÁS<span class="sr-only"> sobre la {m.name}</span></a>
+            <dl class="stats">
+              {statKeys.map(([k, label, cx]) => (
+                <div style={`--cx:${cx}`}><dt class="ff-s">{label}</dt><dd class="ff-h">{m.stats[k]}</dd></div>
+              ))}
+            </dl>
+          </article>
+        );
+      })}
+    </div>
+
+    <div class="a arrows" style="--x:130;--y:5075;--w:170;--h:95">
+      <button class="prev" type="button" aria-label="Modelo anterior"><svg viewBox="130 5075 85 95" aria-hidden="true"><path d="M198.77 5082.37 176.88 5079.65 146.71 5109.81 134.61 5121.92 176.88 5164.2 198.77 5161.47 161.71 5124.43 161.52 5124.62 158.83 5121.92 161.52 5119.23 161.71 5119.42Z"/></svg></button>
+      <button class="next" type="button" aria-label="Modelo siguiente"><svg viewBox="215 5075 85 95" aria-hidden="true"><path d="M231.54 5161.48 253.43 5164.19 283.59 5134.03 295.7 5121.92 283.59 5109.81 253.43 5079.65 231.54 5082.37 268.59 5119.42 268.78 5119.23 271.48 5121.92 268.78 5124.62 268.59 5124.43Z"/></svg></button>
+    </div>
+
+    <div class="a colorbar" style="--x:0;--y:5416;--w:1920;--h:25.4" role="tablist" aria-label="Modelos">
+      {models.map((m, i) => (
+        <button type="button" role="tab" style={`--c:${carouselBar[i % carouselBar.length]}`} aria-label={m.name} aria-selected={i === featured ? 'true' : 'false'}></button>
+      ))}
+    </div>
+  </section>
+
+  <!-- ================= DÓNDE NOS ENCONTRAMOS ================= -->
+  <section class="sec s-map on-light" style="--sy:5441.4;--sh:1504.6" aria-labelledby="h-map" id="red">
+    <img class="a worldmap" style="--x:0;--y:5441;--w:1920;--h:1505" src="/svg/map.svg" alt="" loading="lazy" width="1920" height="1505">
+    <img class="a pattern" style="--x:0;--y:3710;--w:1920;--h:3236" src="/svg/pattern-home.svg" alt="" loading="lazy">
+    <svg class="a marker" style="--x:440;--y:6317;--w:313;--h:313" viewBox="440 6317 313 313" aria-hidden="true">
+      <circle cx="596.59" cy="6473.38" r="89.86"/><circle cx="596.59" cy="6473.38" r="114.48"/><circle cx="596.59" cy="6473.38" r="138.22"/>
+      <path class="ni" d="M612.31 6445.57 613.21 6451.30 610.96 6454.82 610.11 6457.55 609.34 6462.56 609.88 6467.67 608.60 6468.41 608.78 6470.23 607.26 6471.53 608.16 6474.94 606.55 6478.88 607.77 6479.32 608.28 6481.74 606.19 6484.27 605.97 6485.40 606.67 6487.85 607.95 6489.5 607.85 6491.11 605.32 6491.95 602.53 6491.25 600.47 6489.13 597.22 6488.06 594.06 6489.31 586.70 6486.56 585.64 6487.89 576.76 6480.22 574.67 6477.41 573.49 6475.16 569.52 6472.42 564.42 6467.67 563.59 6466.90 564.42 6465.75 566.27 6466.67 567.63 6466.22 570.89 6465.94 571.81 6465.05 572.32 6463.08 574.15 6462.63 573.63 6457.99 574.67 6457.05 578.26 6457.16 581.73 6453.86 582.75 6455.23 584.82 6456.29 585.27 6454.98 588.39 6453.32 589.47 6451.95 591.34 6451.42 591.08 6450.18 591.88 6448.22 594.77 6445.26 595.69 6445.40 596.90 6446.88 599.36 6447.28 601.96 6446.14 606.46 6445.57 611.12 6442.94 614.05 6443.07Z M612.31 6445.57"/>
+    </svg>
+    <p class="t ff-t w4 c-blue" style="--x:152.73;--b:5682.33;--fs:25">RED MTX</p>
+    <h2 class="t ff-d c-blue" id="h-map" style="--x:152.73;--b:5774.49;--fs:75;--lh:90">DONDE NOS<br>ENCONTRAMOS</h2>
+    <p class="t wrap ff-s c-k map-intro" style="--x:159.4;--b:5933.53;--fs:17.33;--lh:24">Encuentra tiendas y distribuidores MTX cerca de ti,<br class="d"> descubre dónde conocer nuestra gama de motocicletas,<br class="d"> recibir información sobre los modelos disponibles y<br class="d"> encontrar el punto de venta más conveniente en tu zona.</p>
+
+    <div class="panel a wh" style="--x:876;--y:6092;--w:890;--h:854.6">
+      <p class="country-k"><i></i>PAIS</p>
+      <p class="country">{country.name}</p>
+      <hr>
+      <ul class="dealers" tabindex="0" aria-label={`Puntos de venta en ${country.name}`}>
+        {country.dealers.map((d) => (
+          <li>
+            <h3>{d.name.toUpperCase()}</h3>
+            <dl>
+              <div><dt>T</dt><dd><a href={`tel:${d.phone.replace(/\s/g, '')}`}>{d.phone}</a></dd></div>
+              <div><dt>E</dt><dd><a href={`mailto:${d.email}`}>{d.email}</a></dd></div>
+              <div><dt>D</dt><dd>{d.address}. {d.neighborhood}, {d.city}</dd></div>
+            </dl>
+          </li>
+        ))}
+      </ul>
+      <div class="scroll-track" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <!-- ================= TU FUERZA + PARTNER ================= -->
+  <section class="sec s-partner" style="--sy:6946;--sh:3325" aria-labelledby="h-partner" id="partner">
+    <Image class="a" style="--x:0;--y:7705;--w:1920;--h:2640" src={asset('img/dark-bikes-bg.webp')} widths={[960, 1920, 2880]} sizes="100vw" alt="" />
+    <div class="a fuerza-photo" style="--x:0;--y:7062;--w:1920;--h:1114">
+      <Image src={asset('models/metro-150/hero.webp')} widths={[1280, 1920, 2560, 3840]} sizes="(max-width: 1023px) 160vw, 104vw" alt="Piloto MTX en scooter por una calle mojada" />
+    </div>
+    <div class="a wh shade-top" style="--x:0;--y:6946;--w:1920;--h:768"></div>
+    <div class="a wh shade-bot" style="--x:0;--y:7438;--w:1920;--h:768"></div>
+    <p class="fuerza">
+      <span class="t ff-d ol-w thin" style="--x:1348.7;--b:7782.12;--fs:86.4" aria-hidden="true">LIBERTAD.</span>
+      <span class="t ff-d c-w" style="--x:522.19;--b:7881.93;--fs:86.4">TU FUERZA. TU LIBERTAD.</span>
+      <span class="t ff-d ol-w thin" style="--x:691.89;--b:7980.5;--fs:86.4" aria-hidden="true">FUERZA.</span>
+    </p>
+
+    <h2 class="t ff-t c-w partner-title" id="h-partner" style="--x:648;--b:8402.1;--fs:80;--lh:109.52"><span style="padding-left:calc(120*var(--u))">BECOME A</span><br>PARTNER TODAY</h2>
+    <div class="tabs" role="tablist" aria-label="Tipo de socio">
+      <button class="t ff-t w4 is-on" type="button" role="tab" aria-selected="true" style="--x:572.09;--b:8635.37;--fs:33" data-type="distribuidor">DISTRIBUIDOR</button>
+      <button class="t ff-t w4" type="button" role="tab" aria-selected="false" style="--x:1202.62;--b:8635.37;--fs:33" data-type="dealer">DEALER</button>
+    </div>
+    <form class="pform" action={site.forms.partner || '#'} method="post" data-endpoint={site.forms.partner} novalidate>
+      <input type="hidden" name="tipo" value="distribuidor">
+      {fields.map(([label, name, type, ac, req], i) => (
+        <label class="fld a wh" style={`--x:${i % 2 ? 1025 : 444};--y:${rowsY[Math.floor(i / 2)]};--w:451;--h:43`}>
+          <span>{label}</span><input name={name} type={type} autocomplete={ac} required={req}>
+        </label>
+      ))}
+      <label class="fld area a wh" style="--x:444;--y:9198;--w:1032;--h:155"><span>HABLAMOS DE TU EMPRESA</span><textarea name="empresa_detalle"></textarea></label>
+      <label class="fld area a wh" style="--x:444;--y:9397;--w:1032;--h:154.4"><span>COMENTARIOS ADICIONALES</span><textarea name="comentarios"></textarea></label>
+      <label class="consent a" style="--x:444;--y:9642"><input type="checkbox" name="acepto" required><i></i>
+        <span class="t ff-s" style="--x:70.11;--b:12.67;--fs:17.16;--lh:23.77;--sy:0">Acepto los términos y condiciones establecidos por la empresa.<br>Al proporcionar mi número de teléfono, acepto recibir mensajes de texto de la empresa.*</span></label>
+      <button class="send a wh" type="submit" style="--x:444;--y:9752;--w:256;--h:54">ENVIAR</button>
+      <p class="form-msg a" style="--x:730;--y:9770" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</Base>

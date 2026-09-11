@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+interface Props { variant?: 'blue' | 'red' | 'black' }
+const { variant = 'blue' } = Astro.props;
+const cls = variant === 'red' ? 'is-red' : variant === 'black' ? 'is-black' : '';
+const xs = [153.88, 318.34, 537.66, 756.96];
+---
+<footer class={`sec contact ${cls}`} id="contacto" aria-labelledby="h-contact">
+  <a class="logo-big a wh" href="#top" aria-label="Volver arriba"><img src="/svg/logo.svg" alt="MTX" width="185" height="65" loading="lazy"></a>
+  <h2 id="h-contact">
+    <span class="t ff-d ol-w" style="--x:73.8;--b:427.76;--fs:86.4" aria-hidden="true">¿PREGUNTAS?</span>
+    <span class="t ff-d c-w" style="--x:63.39;--b:540.8;--fs:86.4">¿PREGUNTAS?</span>
+    <span class="t ff-d c-w" style="--x:63.39;--b:644.48;--fs:86.4">NO DUDES EN CONTÁCTARNOS.</span>
+    <span class="t ff-d ol-w" style="--x:813.56;--b:756.51;--fs:86.4" aria-hidden="true">CONTÁCTARNOS.</span>
+  </h2>
+  <p class="t wrap ff-s trk c-w contact-intro" style="--x:151.42;--b:1002.29;--fs:20;--lh:24.28">¿Quieres conocer más sobre MTX? Contáctanos y<br class="d"> nuestro equipo te ayudará a encontrar la información<br class="d"> que necesitas.</p>
+  <form class="cform" action={site.forms.contact || '#'} method="post" data-endpoint={site.forms.contact} novalidate>
+    <label class="field a wh"><span class="t">COMENTARIOS:</span><textarea name="comentarios" aria-label="Comentarios" required></textarea></label>
+    <div class="cform-extra"><input type="email" name="correo" placeholder="TU CORREO" aria-label="Tu correo" autocomplete="email" required><button type="submit">ENVIAR</button></div>
+  </form>
+  <div class="rule a"></div>
+  <nav class="fnav" aria-label="Pie de página">
+    {site.nav.map((item, i) => <a class="t" style={`--x:${xs[i]};--b:1184.95`} href={item.href}>{item.label}</a>)}
+  </nav>
+</footer>

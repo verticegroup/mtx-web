@@ -1,0 +1,66 @@
+---
+import Header from '../components/Header.astro';
+import ContactFooter from '../components/ContactFooter.astro';
+import { site } from '../data/site';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: string;
+  pageClass: string;
+  contact?: 'blue' | 'red' | 'black';
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, current, pageClass, contact = 'blue', ogImage = '/og.jpg', jsonLd } = Astro.props;
+// Versión de demo (npm run build:demo): Google no la indexa
+const noindex = import.meta.env.PUBLIC_NOINDEX === '1';
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'MTX',
+  url: site.url,
+  logo: new URL('/favicon.svg', site.url).href,
+};
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {noindex && <meta name="robots" content="noindex, nofollow">}
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:site_name" content="MTX">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={new URL(ogImage, Astro.site ?? site.url).href}>
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json" set:html={JSON.stringify(org)} />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  <slot name="head" />
+</head>
+<body>
+  <a class="sr-only" href="#main">Saltar al contenido</a>
+  <div class={`page ${pageClass}`}>
+    <Header current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <ContactFooter variant={contact} />
+  </div>
+  <script>
+    import '../scripts/main.ts';
+  </script>
+</body>
+</html>

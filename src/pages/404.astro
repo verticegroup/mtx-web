@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/home.css';
+import '../styles/mobile.css';
+---
+<Base title="Página no encontrada — MTX" description="La página que buscas no existe." pageClass="notfound" contact="black">
+  <section class="nf">
+    <p class="ff-t">ERROR 404</p>
+    <h1 class="ff-d c-red">RUTA<br>NO ENCONTRADA</h1>
+    <a class="btn-pill" href="/">VOLVER AL INICIO</a>
+  </section>
+</Base>
+<style>
+  .nf{min-height:80svh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:24px;padding:140px 8vw 80px;background:#000}
+  .nf p{font-size:clamp(14px,1.3vw,25px);color:var(--nav)}
+  .nf h1{font-size:clamp(44px,9vw,160px);line-height:.95}
+  .nf .btn-pill{height:54px;padding:4px 34px 0;font-size:clamp(15px,1.3vw,25px)}
+</style>

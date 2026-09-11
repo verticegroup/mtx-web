@@ -1,0 +1,116 @@
+/* =========================================================
+   MTX — base (tokens, fonts, layout primitives, shared UI)
+   Desktop is authored in design px (1920 artboard) via --u.
+   ========================================================= */
+
+/* ---------- Fonts ----------
+   Archivos de producción en public/fonts (ver README). El segundo src es un
+   respaldo temporal extraído del PDF del diseño (subconjunto de glifos). Metrics are
+   overridden so layout is identical with either file. */
+/* Satoshi, Tabular y Roboto Mono: si no están los .woff2 propios, se cargan de Fontshare / Google Fonts (licencias libres).
+   Good Times y Ethnocentric: solo archivos propios o los recortes de _temp (para la demo). */
+@font-face{font-family:"MTX Display";src:url(/fonts/GoodTimes-BoldItalic.woff2) format("woff2"),url(/fonts/_temp/goodtimes-bi.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"MTX Display Heavy";src:url(/fonts/GoodTimes-HeavyItalic.woff2) format("woff2"),url(/fonts/_temp/goodtimes-hvi.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"MTX Wide";src:url(/fonts/Ethnocentric-Regular.woff2) format("woff2"),url(/fonts/_temp/ethnocentric.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Satoshi";font-weight:300;src:url(/fonts/Satoshi-Light.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/D7WD5OXZFWQ5T76HSPWAC7MNKAJXE2YG/LUGNSPO5YC34ABNB2O6K7AFDSOJZT56V/WNDVG7O66ENLOD43GS7FBUCC4KMT5OM2.woff2) format("woff2"),url(/fonts/_temp/satoshi-light.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Satoshi";font-weight:400;src:url(/fonts/Satoshi-Regular.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2) format("woff2"),url(/fonts/_temp/satoshi-var.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Satoshi";font-weight:400;src:url(/fonts/Satoshi-Regular.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2) format("woff2"),url(/fonts/_temp/satoshi-regular.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%;unicode-range:U+00D7,U+00C1,U+00DA}
+@font-face{font-family:"Satoshi";font-weight:500;src:url(/fonts/Satoshi-Medium.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2) format("woff2"),url(/fonts/_temp/satoshi-medium.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Tabular";font-weight:300;src:url(/fonts/Tabular-Light.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/PQPBBTT23TVSHE4TPCCYFNTUMFP2SSQM/25LIFMGNHPHMLHVGVIDXSSOSOXYONUUM/X2WIG4ZWMR6SKP7WSMQCYKAFXBZHNUJ4.woff2) format("woff2"),url(/fonts/_temp/tabular.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Tabular";font-weight:400;src:url(/fonts/Tabular-Regular.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/343V3MZ5WLCKLWP7EPBJKKDZOPCKH2KS/3MIJ5S4M7JHTVR54CFDRC6FIVRBNDYQI/243MYGFACQQN6ZFKSR53HQOIVWDIHPNK.woff2) format("woff2"),url(/fonts/_temp/tabular.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Tabular";font-weight:500;src:url(/fonts/Tabular-Medium.woff2) format("woff2"),url(https://cdn.fontshare.com/wf/4MEBIXIQFRJEOSCYW2CZ5NDIQBXZJXJC/ZYJCECLQ5TXNWW6UF4KX5WNJPAEZ3VKE/JSEKWSFY2RIYW3XS7TFNNYI22ND6P65O.woff2) format("woff2"),url(/fonts/_temp/tabular.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Tabular";font-weight:300;font-style:italic;src:url(/fonts/Tabular-SemiboldItalic.woff2) format("woff2"),url(/fonts/_temp/tabular-italic.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Roboto Mono MTX";src:url(/fonts/RobotoMono-Regular.woff2) format("woff2"),url(https://fonts.gstatic.com/s/robotomono/v31/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW4AJi8SJQt.woff2) format("woff2"),url(/fonts/_temp/robotomono.ttf) format("truetype");font-display:swap;ascent-override:80%;descent-override:20%;line-gap-override:0%}
+
+:root{
+  --red:#E21E28; --red-line:#F40E27; --blue:#323091; --bronze:#9F7754;
+  --gray:#E6E7E8; --light:#F1F2F2; --silver:#A8AAAD; --steel:#6C6C74;
+  --ink:#231F20; --ink2:#1A1A1A; --nav:#E6E7E8;
+  --f-display:"MTX Display",Impact,"Arial Black",sans-serif;
+  --f-heavy:"MTX Display Heavy","MTX Display",Impact,sans-serif;
+  --f-wide:"MTX Wide","MTX Display",sans-serif;
+  --f-sans:"Satoshi",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-tab:"Tabular",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --f-mono:"Roboto Mono MTX","Roboto Mono",ui-monospace,monospace;
+  /* 1 design px (1920 artboard). cqw resolves against .page */
+  --u:calc(100cqw / 1920);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:#000;color:#fff;font-family:var(--f-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+img,svg{display:block;max-width:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0;padding:0;font-weight:inherit;font-size:inherit}
+ul,ol{list-style:none}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.page{container-type:inline-size;position:relative;overflow-x:clip;width:100%}
+
+/* ---------- Desktop primitives (design coordinates) ----------
+   .sec  : section, --sy = its top on the artboard, --sh = height
+   .a    : absolute box at --x/--y (+ optional --w/--h)
+   .t    : absolute text; --b = baseline on artboard, --fs, --lh    */
+.sec{position:relative;height:calc(var(--sh) * var(--u))}
+.a{position:absolute;left:calc(var(--x,0) * var(--u));top:calc((var(--y,0) - var(--sy,0)) * var(--u))}
+.wh{width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u))}
+.w{width:calc(var(--w) * var(--u))}
+.t{position:absolute;left:calc(var(--x,0) * var(--u));
+   top:calc((var(--b) - var(--sy,0) - (var(--lh,var(--fs)) - var(--fs)) / 2 - .8 * var(--fs)) * var(--u));
+   font-size:calc(var(--fs) * var(--u));line-height:calc(var(--lh,var(--fs)) * var(--u));white-space:nowrap}
+.t.wrap{white-space:normal}
+.cover{position:absolute;inset:0}
+.fill{width:100%;height:100%;object-fit:cover}
+
+/* type families */
+.ff-d{font-family:var(--f-display)}
+.ff-h{font-family:var(--f-heavy)}
+.ff-w{font-family:var(--f-wide)}
+.ff-s{font-family:var(--f-sans)}
+.ff-t{font-family:var(--f-tab);font-weight:300}
+.ff-t.w4{font-weight:400}
+.ff-m{font-family:var(--f-mono)}
+.up{text-transform:uppercase}
+.trk{letter-spacing:.075em}
+.ol{color:transparent;-webkit-text-stroke:1px var(--red-line)}
+.ol-w{color:transparent;-webkit-text-stroke:1px #fff}
+.c-red{color:var(--red)} .c-blue{color:var(--blue)} .c-ink{color:var(--ink)} .c-ink2{color:var(--ink2)} .c-nav{color:var(--nav)} .c-w{color:#fff} .c-k{color:#000} .c-bronze{color:var(--bronze)}
+
+/* ---------- Header ---------- */
+.hdr{position:absolute;inset:0 0 auto 0;z-index:50;height:calc(160 * var(--u));--sy:0}
+.hdr .logo{--x:60;--y:50;--w:185;--h:65}
+.hdr .logo img{width:100%;height:100%}
+.nav a{--fs:25;--b:86.47;font-family:var(--f-tab);font-weight:300;color:var(--nav);transition:color .2s}
+.nav a[aria-current="page"]{font-style:italic}
+.nav a:hover{color:#fff}
+.nav-toggle{display:none}
+
+/* ---------- Contact / footer (shared) ---------- */
+.contact{--sh:1340.6;--sy:0;background:var(--blue);overflow:hidden}
+.contact.is-red{background:var(--red)}
+.contact.is-black{background:#010101}
+.contact .logo-big{--x:59.1;--y:178.9;--w:241.1;--h:84.7}
+.contact .logo-big img{width:100%;height:100%}
+.contact h2 span{display:block}
+.contact .field{--x:814;--y:897;--w:904;--h:155;border-radius:calc(12 * var(--u));background:rgba(204,204,204,.19);box-shadow:inset 0 0 0 .75px rgba(255,255,255,.35);display:block}
+.contact.is-red .field{background:rgba(255,255,255,.14)}
+.contact.is-black .field{background:#2a2a2a}
+.contact .field textarea{position:absolute;inset:0;width:100%;height:100%;resize:none;border:0;background:transparent;color:#fff;font-family:var(--f-sans);font-size:calc(16 * var(--u));padding:calc(38 * var(--u)) calc(10 * var(--u)) calc(10 * var(--u));outline:none;border-radius:inherit}
+.contact .field label{--x:9.92;--b:26.6;--fs:14.78;font-family:var(--f-sans);letter-spacing:.075em;color:#fff}
+.contact .field textarea:focus{box-shadow:inset 0 0 0 1px #fff}
+.contact .send{--x:1728;--y:1070;display:none}
+.contact .rule{--x:94;--y:1124;--w:1732;height:.75px;background:#fff}
+.fnav a{--fs:20;font-family:var(--f-tab);font-weight:300;color:var(--nav)}
+.fnav a:hover{color:#fff}
+
+/* shared buttons */
+.btn-pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:var(--red);color:#fff;font-family:var(--f-tab);font-weight:300;transition:filter .2s,transform .2s}
+.btn-pill:hover{filter:brightness(1.1)}
+
+/* focus */
+:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.on-light :focus-visible{outline-color:var(--red)}
+
+/* line-break helper used on desktop only */
+@media (max-width:1023px){ br.d{display:none} }

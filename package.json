@@ -1,0 +1,20 @@
+{
+  "name": "mtx-web",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:demo": "PUBLIC_NOINDEX=1 astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "sharp": "^0.34.3"
+  },
+  "engines": {
+    "node": ">=18.20.8"
+  }
+}

@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+interface Props { current?: string }
+const { current } = Astro.props;
+// posiciones x del diseño (artboard 1920)
+const xs = [1080, 1262.02, 1504.71, 1747.4];
+---
+<header class="hdr" id="top">
+  <a class="logo a wh" href="/" aria-label="MTX, ir al inicio"><img src="/svg/logo.svg" alt="MTX" width="185" height="65"></a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú"><span></span><span></span></button>
+  <nav class="nav" id="nav" aria-label="Principal">
+    {site.nav.map((item, i) => (
+      <a class="t" style={`--x:${xs[i]}`} href={item.href} aria-current={item.id === current ? 'page' : undefined}>{item.label}</a>
+    ))}
+  </nav>
+</header>

@@ -53,11 +53,24 @@ copia estos archivos en `public/fonts/` con exactamente estos nombres (se cargan
 | `GoodTimes-HeavyItalic.woff2` | Good Times Heavy Italic (Typodermic — licencia web) |
 | `Ethnocentric-Regular.woff2` | Ethnocentric (Typodermic — licencia web) |
 | `Satoshi-Light.woff2`, `Satoshi-Regular.woff2`, `Satoshi-Medium.woff2` | Satoshi (gratis en fontshare.com) |
-| `Tabular-Light.woff2`, `Tabular-LightItalic.woff2` | Tabular (gratis en fontshare.com) |
+| `Tabular-Light.woff2`, `Tabular-Regular.woff2`, `Tabular-Medium.woff2`, `Tabular-SemiboldItalic.woff2` | Tabular (gratis en fontshare.com; mientras falten, Light/Regular/Medium se cargan desde Fontshare) |
 | `RobotoMono-Regular.woff2` | Roboto Mono (Google Fonts) |
 
 Las métricas verticales están fijadas en `@font-face` (`ascent/descent-override`), así que
 cambiar de archivo no mueve el layout. Cuando estén todas, borra `public/fonts/_temp/`.
+
+## Demo en Netlify (para mostrar al cliente)
+
+```bash
+npm run build:demo   # igual que build, pero la página lleva "noindex" (Google no la indexa)
+```
+
+Luego entra a https://app.netlify.com/drop (con tu cuenta iniciada) y arrastra la carpeta **dist/**.
+Para actualizarla: vuelve a correr `npm run build:demo` y en el sitio de Netlify → *Deploys* arrastra otra vez `dist/`.
+
+Nota de fuentes en la demo: Satoshi, Tabular y Roboto Mono se cargan desde Fontshare / Google Fonts.
+Good Times y Ethnocentric usan recortes sacados de los PDF del diseño (con W, Y, 2, Á, Í reconstruidas);
+se reemplazan solas al copiar los .woff2 definitivos en `public/fonts/`.
 
 ## Formularios
 

@@ -1,0 +1,216 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { models, type Model, type SpecGroup } from '../../data/models';
+import { asset, assetsIn } from '../../lib/images';
+import '../../styles/home.css';
+import '../../styles/product.css';
+import '../../styles/mobile.css';
+
+export function getStaticPaths() {
+  return models.map((m) => ({ params: { slug: m.slug }, props: { model: m } }));
+}
+interface Props { model: Model }
+const { model: m } = Astro.props;
+const slug = m.slug;
+const c0 = m.colors[0];
+
+// ---- 360: URLs optimizadas por color
+const frames: Record<string, string[]> = {};
+const sides: Record<string, { r: string; l: string }> = {};
+for (const c of m.colors) {
+  const imgs = assetsIn(`models/${slug}/360/${c.id}/`);
+  frames[c.id] = await Promise.all(imgs.map(async (src) => (await getImage({ src, width: Math.min(1800, src.width), format: 'webp', quality: 82 })).src));
+  const rs = asset(`models/${slug}/side-right-${c.id}.webp`), ls = asset(`models/${slug}/side-left-${c.id}.webp`);
+  const r = await getImage({ src: rs, width: Math.min(1400, rs.width), format: 'webp' });
+  const l = await getImage({ src: ls, width: Math.min(2200, ls.width), format: 'webp' });
+  sides[c.id] = { r: r.src, l: l.src };
+}
+const firstFrame = asset(`models/${slug}/360/${c0.id}/01.webp`);
+
+// ---- especiales: imágenes de detalle para el popup
+const puntos = await Promise.all(
+  assetsIn(`models/${slug}/puntos/`).map(async (src) => (await getImage({ src, width: Math.min(800, src.width), format: 'webp', quality: 80 })).src)
+);
+const gallery = assetsIn(`models/${slug}/galeria/`);
+
+// ---- ficha: dos grupos a lo ancho y el resto en parejas
+const full = m.specs.slice(0, 2);
+const rest = m.specs.slice(2);
+const pairs: SpecGroup[][] = [];
+for (let i = 0; i < rest.length; i += 2) pairs.push(rest.slice(i, i + 2));
+const stats = [
+  ['cc', 'CILINDRADA', 311.6],
+  ['kw', 'POTENCIA MÁX.', 727.4],
+  ['vel', 'VEL. MÁXIMA', 1173],
+  ['peso', 'PESO HÚMEDO', 1602.9],
+] as const;
+const pad = (n: number) => String(n).padStart(2, '0');
+const heroSrc = asset(`models/${slug}/hero.webp`);
+const blurSrc = m.heroBlur ? asset(m.heroBlur) : heroSrc;
+const tris = [
+  '20.775% 29.312%,46.339% 42.134%,41.252% 3.700%',
+  '10.032% 84.309%,26.162% 72.343%,10.930% 58.111%',
+  '64.097% 92.721%,100% 72.796%,100% 72.342%,70.163% 37.367%',
+];
+const og = await getImage({ src: heroSrc, width: 1200, format: 'jpg', quality: 80 });
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `MTX ${m.name}`,
+  brand: { '@type': 'Brand', name: 'MTX' },
+  category: m.category,
+  description: m.subtitle,
+  image: [new URL(og.src, Astro.site).href],
+};
+let uid = 0;
+---
+<Base
+  title={`MTX ${m.name.charAt(0)}${m.name.slice(1).toLowerCase()} — ${m.headline.charAt(0)}${m.headline.slice(1).toLowerCase()}`}
+  description={m.seoDescription}
+  current="productos"
+  pageClass="product"
+  contact="red"
+  ogImage={og.src}
+  jsonLd={jsonLd}
+>
+  <!-- ============ HERO ============ -->
+  <section class="sec p-hero" style="--sy:0;--sh:1328" aria-labelledby="h-model">
+    <div class="phero">
+      <div class="phero-photo"><Image src={heroSrc} widths={[1280, 1920, 2560, 3840]} sizes="(max-width: 1023px) 260vw, 126vw" alt={m.heroAlt} loading="eager" fetchpriority="high" /></div>
+      <div class="phero-shade top"></div>
+      <div class="phero-shade bot"></div>
+      {tris.map((poly) => (
+        <div class={`tri${m.heroBlur ? '' : ' css'}`} style={`clip-path:polygon(${poly})`}><Image src={blurSrc} widths={[1200, 2478]} sizes="130vw" alt="" loading="eager" /></div>
+      ))}
+      <img class="hero-lines" src="/svg/lines-product-hero.svg" alt="" width="1920" height="1340">
+    </div>
+    <h1 id="h-model">
+      <span class="t ff-d c-red" style="--x:33.54;--b:720.16;--fs:272.25">{m.name}</span>
+      <span class="t ff-d ol" style="--x:33.54;--b:945.71;--fs:272.25" aria-hidden="true">{m.name}</span>
+    </h1>
+    {m.price && (
+      <div class="price">
+        <p class="t ff-d" style="--x:123.3;--b:1066.25;--fs:80">PRECIO</p>
+        <p class="t ff-h" style="--x:123.3;--b:1167.47;--fs:76.55">{m.price}</p>
+        <p class="t ff-s" style="--x:123.3;--b:1223.53;--fs:24.06">{m.priceNote}</p>
+      </div>
+    )}
+  </section>
+
+  <!-- ============ MODELO / 360 / FICHA ============ -->
+  <section class="sec p-main on-light" style="--sy:1328">
+    <img class="a pattern" style="--x:0;--y:1328;--w:1920;--h:9392" src="/svg/pattern-product.svg" alt="" loading="lazy">
+    <img class="a lines" style="--x:0;--y:1328;--w:1920;--h:1972" src="/svg/lines-product-carousel.svg" alt="" loading="lazy">
+    <p class="t ff-t w4 c-red" style="--x:123.3;--b:1472.02;--fs:25">NUESTROS PRODUCTOS</p>
+    <Image class="a bike-sm" style="--x:96.6;--y:1583.1;--h:595" src={asset(`models/${slug}/side-right-${c0.id}.webp`)} widths={[600, 1000, 1400]} sizes="(max-width: 1023px) 92vw, 50vw" alt={`MTX ${m.name}, lateral derecho`} />
+    <div class="a bike-lg-clip" style="--x:671;--y:1487;--w:1249;--h:1673">
+      <Image class="bike-lg" style="--h:1303.4;left:calc((874.2 - 671) * var(--u));top:calc((1636 - 1487) * var(--u))" src={asset(`models/${slug}/side-left-${c0.id}.webp`)} widths={[1100, 1600, 2200]} sizes="110vw" alt={`MTX ${m.name}, lateral izquierdo`} />
+    </div>
+    <p class="names" aria-hidden="true">
+      <span class="t ff-d c-red" style="--x:123.3;--b:2396.35;--fs:115.91">{m.name}</span>
+      <span class="t ff-d c-red" style="--x:123.3;--b:2496.47;--fs:115.91">{m.name}</span>
+      <span class="t ff-d ol" style="--x:123.3;--b:2596.52;--fs:115.91">{m.name}</span>
+    </p>
+
+    <div class="v360 a" style="--x:80.7;--y:3061.4;--w:1689;--h:1126" data-360 data-frames={JSON.stringify(frames)} data-sides={JSON.stringify(sides)} role="img" aria-label={`Vista 360° de la MTX ${m.name}. Arrastra o usa las flechas para girar.`}>
+      <Image class="v360-img" src={firstFrame} width={1800} alt="" draggable="false" />
+      <button class="v360-badge" type="button" aria-label="Girar la moto 360°"><span>360</span></button>
+    </div>
+    <div class="swatches a" style={`--x:${960 - m.colors.length * 128.25};--y:4243;--w:${m.colors.length * 256.5};--h:25`} role="radiogroup" aria-label="Color">
+      {m.colors.map((c, i) => (
+        <button type="button" role="radio" aria-checked={i === 0 ? 'true' : 'false'} style={`--c:${c.hex}`} data-color={c.id} aria-label={c.label}></button>
+      ))}
+    </div>
+
+    <dl class="stats pstats">
+      {stats.map(([k, label, cx]) => <div style={`--cx:${cx}`}><dt class="ff-s">{label}</dt><dd class="ff-h">{m.stats[k]}</dd></div>)}
+    </dl>
+
+    <h2 class="t ff-d c-red" style="--x:123.3;--b:4884.25;--fs:115.91">TECH-INFO</h2>
+    <div class="tech">
+      {m.transmission ? (
+        <>
+          <h3 class="tt-trans">TRANSMISIÓN</h3>
+          <ol class="gears">{m.transmission.map((r, i) => <li><b>{i + 1}</b><span>{r}</span></li>)}</ol>
+        </>
+      ) : (
+        <div class="tech-spacer" aria-hidden="true"></div>
+      )}
+      {full.map((g) => {
+        const id = `sp-${++uid}`;
+        return (
+          <div class="acc full is-open" data-acc>
+            <button class="pill" type="button" aria-expanded="true" aria-controls={id} id={`b-${id}`} style={g.pill ? `--pw:${g.pill}` : undefined}>{g.title}</button>
+            <ul class="specs" id={id} role="region" aria-labelledby={`b-${id}`}>
+              {g.rows.map(([k, v]) => <li><span>{k}</span><b>{v}</b></li>)}
+            </ul>
+          </div>
+        );
+      })}
+      {pairs.map((pair) => {
+        const off = pair.length === 2 && pair[0].rows.length - pair[1].rows.length === 1 ? 1 : 0;
+        return (
+          <div class="acc-row">
+            {pair.map((g, j) => {
+              const id = `sp-${++uid}`;
+              return (
+                <div class={`acc ${pair.length === 2 ? 'half' : 'full'}${j === 1 ? ' r' : ''} is-open`} data-acc style={j === 1 ? `--off:${off}` : undefined}>
+                  <button class="pill" type="button" aria-expanded="true" aria-controls={id} id={`b-${id}`} style={g.pill ? `--pw:${g.pill}` : undefined}>{g.title}</button>
+                  <ul class="specs" id={id} role="region" aria-labelledby={`b-${id}`}>
+                    {g.rows.map(([k, v]) => <li><span>{k}</span><b>{v}</b></li>)}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- ============ ESPECIALES ============ -->
+  <section class="sec p-esp" style="--sy:7288;--sh:1799" aria-labelledby="h-esp" data-puntos={JSON.stringify(puntos)}>
+    <img class="a pattern" style="--x:0;--y:1328;--w:1920;--h:9392" src="/svg/pattern-product.svg" alt="" loading="lazy">
+    <h2 class="t ff-d c-red" id="h-esp" style="--x:109.22;--b:7925.06;--fs:115.91">ESPECIALES</h2>
+    <div class="t wrap ff-s c-ink esp-copy" style="--x:119.98;--b:8021.78;--fs:25;--lh:30">
+      {m.especiales.copy.map((p) => <p>{p}</p>)}
+    </div>
+    <ol class="esp-list t" style="--x:119.99;--b:8425.86;--fs:14.78;--lh:48.58">
+      {m.especiales.items.map((it, i) => <li><button type="button" data-spot={i + 1}>{i + 1}. {it}</button></li>)}
+    </ol>
+    <div class="hotimg a" style={`--x:594.9;--y:8123.6;--w:1376.2;--h:917.2;--ar:${m.especiales.aspect}`}>
+      <div class="hot-inner">
+        <Image src={asset(`models/${slug}/especiales.webp`)} widths={[800, 1400, 2000]} sizes="(max-width: 1023px) 96vw, 72vw" alt={`MTX ${m.name} con sus especiales señalados`} />
+        {m.especiales.spots.map((s, i) => (
+          <button class="spot" type="button" data-spot={i + 1} style={`left:${s.x}%;top:${s.y}%`} aria-label={m.especiales.items[i]}>{pad(i + 1)}</button>
+        ))}
+      </div>
+    </div>
+    <div class="spot-pop" role="dialog" aria-modal="false" aria-labelledby="pop-t" hidden>
+      <button class="pop-x" type="button" aria-label="Cerrar">×</button>
+      <img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" width="800" height="800">
+      <p id="pop-t"></p>
+    </div>
+  </section>
+
+  <!-- ============ CLAIM / GALERÍA ============ -->
+  <section class="sec p-gal" style="--sy:9087;--sh:1547" aria-labelledby="h-gal">
+    <h2 class="t ff-h c-ink2" id="h-gal" style="--x:121.78;--b:9271.63;--fs:76.55;--lh:91.85">{m.claim[0]}<br>{m.claim[1]}<br>{m.claim[2]}</h2>
+    <p class="t ff-s c-ink" style="--x:121.78;--b:9544.06;--fs:25">{m.subtitle}</p>
+    <div class="gal a" style="--x:0;--y:9647.96;--w:1920;--h:900">
+      <ul class="gal-track" tabindex="0" aria-label="Galería de detalles">
+        {gallery.map((src, i) => (
+          <li>
+            <Image src={src} widths={[480, 760, 1200]} sizes="(max-width: 1023px) 78vw, 38vw" alt={m.gallery[i] ?? ''} />
+            {m.gallery[i] && <p>{m.gallery[i]}</p>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    import '../../scripts/product.ts';
+  </script>
+</Base>

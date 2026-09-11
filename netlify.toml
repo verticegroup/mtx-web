@@ -1,0 +1,7 @@
+# Demo en Netlify (si se conecta el repositorio). Con "Netlify Drop" se sube la carpeta dist/ ya generada.
+[build]
+  command = "npm run build:demo"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
